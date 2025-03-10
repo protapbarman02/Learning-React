@@ -75,7 +75,7 @@ function Calculator() {
           return [button];
         }
         if (button == 0 && prev.length === 1 && prev[0] == 0) {
-          return prev; // Keep the same state, avoiding multiple leading zeros
+          return prev;
         }
 
         return [...prev, button];
