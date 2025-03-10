@@ -27,16 +27,26 @@ function Calculator() {
     }
 
     if (button === "=") {
-      const result = eval(displayValue.join(""));
-      if (isDecimal(result)) setIsDotSet(true);
-      else setIsDotSet(false);
-      setDisplayValue([result]);
-      if (!isNumeric(result)) {
+      try {
+        const result = eval(displayValue.join(""));
+        if (isDecimal(result)) setIsDotSet(true);
+        else setIsDotSet(false);
+        setDisplayValue([result]);
+        if (!isNumeric(result)) {
+          setTimeout(() => {
+            setDisplayValue([0]);
+            setInitialState(true);
+          }, 1000);
+        }
+        return;
+      } catch (e) {
+        console.log(e);
+        setDisplayValue(["ERROR"]);
         setTimeout(() => {
           setDisplayValue([0]);
+          setInitialState(true);
         }, 1000);
       }
-      return;
     }
 
     if (typeof button === "object" && button.type?.name === "LuDelete") {
@@ -60,6 +70,10 @@ function Calculator() {
           setInitialState(false);
           return [button];
         }
+        if (button == 0 && prev.length === 1 && prev[0] == 0) {
+          return prev; // Keep the same state, avoiding multiple leading zeros
+        }
+
         return [...prev, button];
       });
       return;
