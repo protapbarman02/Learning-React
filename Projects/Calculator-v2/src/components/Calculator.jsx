@@ -8,6 +8,7 @@ function Calculator() {
   const [isInitialState, setInitialState] = useState(true);
 
   const isDecimal = (value) => /^-?\d+\.\d+$/.test(String(value));
+  const isNumeric = (value) => !isNaN(value) && !isNaN(parseFloat(value));
 
   const clickHandler = (button) => {
     if (button === ".") {
@@ -30,6 +31,11 @@ function Calculator() {
       if (isDecimal(result)) setIsDotSet(true);
       else setIsDotSet(false);
       setDisplayValue([result]);
+      if (!isNumeric(result)) {
+        setTimeout(() => {
+          setDisplayValue([0]);
+        }, 1000);
+      }
       return;
     }
 
