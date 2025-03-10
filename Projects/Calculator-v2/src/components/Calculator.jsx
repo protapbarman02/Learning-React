@@ -9,6 +9,10 @@ function Calculator() {
 
   const isDecimal = (value) => /^-?\d+\.\d+$/.test(String(value));
   const isNumeric = (value) => !isNaN(value) && !isNaN(parseFloat(value));
+  const safeEval = (expression) => {
+    expression = expression.replace(/\b0+(\d+)/g, "$1");
+    return eval(expression);
+  };
 
   const clickHandler = (button) => {
     if (button === ".") {
@@ -28,7 +32,7 @@ function Calculator() {
 
     if (button === "=") {
       try {
-        const result = eval(displayValue.join(""));
+        const result = safeEval(displayValue.join(""));
         if (isDecimal(result)) setIsDotSet(true);
         else setIsDotSet(false);
         setDisplayValue([result]);
