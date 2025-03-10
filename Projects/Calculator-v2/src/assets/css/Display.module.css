@@ -1,0 +1,10 @@
+.noFocusRing {
+  --bs-focus-ring-color: none;
+  outline: none !important;
+  box-shadow: none !important;
+  border-radius: 0px;
+}
+
+.noFocusRing:focus {
+  border-color: #ced4da !important;
+}
