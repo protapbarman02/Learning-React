@@ -7,10 +7,7 @@ function Calculator() {
   const [isDotSet, setIsDotSet] = useState(false);
   const [isInitialState, setInitialState] = useState(true);
 
-  const isDecimal = (value) => {
-    const isDecimal = String(value).match(/^-?\d*\.?\d+$/);
-    return isDecimal !== null;
-  };
+  const isDecimal = (value) => /^-?\d+\.\d+$/.test(String(value));
 
   const clickHandler = (e, button) => {
     if (button === ".") {
@@ -30,19 +27,19 @@ function Calculator() {
 
     if (button === "=") {
       const result = eval(displayValue.join(""));
+      console.log(result);
+      console.log(isDecimal(result));
+      if (isDecimal(result)) setIsDotSet(true);
+      else setIsDotSet(false);
       setDisplayValue([result]);
-      if (isDecimal(result)) {
-        setIsDotSet(true);
-      } else {
-        setIsDotSet(false);
-      }
       return;
     }
 
     if (typeof button === "object" && button.type?.name === "LuDelete") {
       setDisplayValue((prev) => {
+        if (prev.at(-1) === ".") setIsDotSet(false);
         const updated = prev.slice(0, -1);
-        if (button === ".") setIsDotSet(false);
+        if (updated.at(-1) === ".") setIsDotSet(true);
         if (updated.length === 0) {
           setInitialState(true);
           return [0];
