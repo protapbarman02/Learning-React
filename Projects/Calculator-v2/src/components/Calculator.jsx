@@ -9,7 +9,7 @@ function Calculator() {
 
   const isDecimal = (value) => /^-?\d+\.\d+$/.test(String(value));
 
-  const clickHandler = (e, button) => {
+  const clickHandler = (button) => {
     if (button === ".") {
       if (isDotSet) return;
       setDisplayValue([...displayValue, button]);
