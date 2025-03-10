@@ -27,8 +27,6 @@ function Calculator() {
 
     if (button === "=") {
       const result = eval(displayValue.join(""));
-      console.log(result);
-      console.log(isDecimal(result));
       if (isDecimal(result)) setIsDotSet(true);
       else setIsDotSet(false);
       setDisplayValue([result]);
