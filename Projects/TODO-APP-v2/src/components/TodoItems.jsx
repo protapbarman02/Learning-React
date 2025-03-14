@@ -1,13 +1,14 @@
 import TodoItem from "./TodoItem";
 
-function TodoItems({ todoItems }) {
+function TodoItems({ todoItems, handleDelete }) {
   return (
     <div className="items-container">
       {todoItems.map((item) => (
         <TodoItem
-          key={item.id}
+          key={item.todoTitle}
           todoTitle={item.todoTitle}
           todoDate={item.todoDate}
+          handleDelete={() => handleDelete(item)}
         />
       ))}
     </div>

@@ -1,33 +1,28 @@
 import "./App.css";
+import { useState } from "react";
 import AppName from "./components/AppName";
 import AddTodo from "./components/AddTodo";
 import TodoItems from "./components/TodoItems";
 
 function App() {
-  const todoItems = [
-    {
-      id: 1,
-      todoTitle: "Practice Basic PHP",
-      todoDate: "10/03/2025",
-    },
-    {
-      id: 2,
-      todoTitle: "Practice Advanced PHP",
-      todoDate: "15/03/2025",
-    },
-    {
-      id: 3,
-      todoTitle: "Practice Advanced SQL",
-      todoDate: "20/03/2025",
-    },
-  ];
+  const [todoItems, setTodoItems] = useState([]);
+
+  const handleNewTodo = (name, date) => {
+    const updatedItems = [...todoItems, { todoTitle: name, todoDate: date }];
+    setTodoItems(updatedItems);
+  };
+
+  const handleDelete = (deletedItem) => {
+    const updatedItems = todoItems.filter((item) => item != deletedItem);
+    setTodoItems(updatedItems);
+  };
 
   return (
     <>
       <div className="container">
         <AppName />
-        <AddTodo />
-        <TodoItems todoItems={todoItems} />
+        <AddTodo handleNewTodo={handleNewTodo} />
+        <TodoItems todoItems={todoItems} handleDelete={handleDelete} />
       </div>
     </>
   );
